@@ -19,7 +19,18 @@ const Register = ({ navigation }) => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
 
- 
+  const addUser = (email, phone, password) => {
+    fetch("https://653f4b7b9e8bd3be29e02fc1.mockapi.io/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, phone, password }),
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json))
+      .catch((error) => console.error(error));
+
+    navigation.navigate("Login");
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -107,7 +118,6 @@ const Register = ({ navigation }) => {
             <TextInput
               placeholder="+91"
               placeholderTextColor={COLORS.black}
-              onChangeText={(text) => setPhone(text)}
               style={{
                 width: "12%",
                 borderRightWidth: 1,
@@ -119,6 +129,7 @@ const Register = ({ navigation }) => {
             <TextInput
               placeholder="Enter your phone number"
               placeholderTextColor={COLORS.black}
+              onChangeText={(text) => setPhone(text)}
               style={{
                 width: "80%",
               }}
@@ -175,7 +186,8 @@ const Register = ({ navigation }) => {
           </View>
         </View>
 
-        <Button onPress={() => addUser(email, phone, password)}
+        <Button
+          onPress={() => addUser(email, phone, password)}
           title="Sign Up"
           filled
           style={{
